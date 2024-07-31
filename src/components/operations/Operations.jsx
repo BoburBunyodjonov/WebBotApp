@@ -14,9 +14,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 
 import avatar1 from "../../assets/Frame 69.png";
+import { useState } from "react";
 
 const Operations = () => {
+  const [filter, setFilter] = useState('');
   const navigate = useNavigate();
+
+  
+
     
   const Users = [
     {
@@ -65,7 +70,11 @@ const Operations = () => {
     }
     console.log(`Selected item ID: ${id}`);
   };
+
   
+  const filteredProducts = Users.filter((product) =>
+    product.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <>
@@ -82,10 +91,15 @@ const Operations = () => {
             placeholder="Поиск"
             className="w-full h-full float-end outline-none px-3 py-4  bg-[#c5c5c81f]"
             type="text"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
             name=""
             id=""
           />
         </form>
+        <ul>
+      </ul>
+
         <Box>
           <List
             dense
@@ -117,7 +131,7 @@ const Operations = () => {
                 </Box>
               </ListItemButton>
             </ListItem>
-            {Users.map((item) => {
+            {filteredProducts.map((item) => {
               const labelId = `checkbox-list-secondary-label-${item}`;
               return (
                 console.log(item.index),
